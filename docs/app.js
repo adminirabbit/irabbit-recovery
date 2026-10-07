@@ -164,7 +164,7 @@ async function viewLogin() {
   };
   const bgo = document.getElementById("bgo");
   if (bgo) bgo.onclick = () => run(async () => {
-    const { data, error } = await sb.functions.invoke("recovery-admin", { body: {
+    const { data, error } = await sb.functions.invoke("quick-processor", { body: {
       action: "set_pin", user_id: "USER-001", pin: document.getElementById("bp").value, bootstrap_secret: document.getElementById("bs").value } });
     if (error || data?.error) throw new Error(data?.error || error.message);
     location.reload();
@@ -492,7 +492,7 @@ async function viewMe() {
   const grp = document.getElementById("grp"); if (grp) grp.onclick = () => run(() => q(sb.from("settings").upsert({ key: "line_group_id", value: S.line_group_pending })), "ตั้งกลุ่มแล้ว").then(viewMe);
   $view.querySelectorAll("[data-setpin]").forEach((b) => b.onclick = () => run(async () => {
     const id = b.dataset.setpin, pin = $view.querySelector(`[data-pin="${id}"]`).value;
-    const { data, error } = await sb.functions.invoke("recovery-admin", { body: { action: "set_pin", user_id: id, pin } });
+    const { data, error } = await sb.functions.invoke("quick-processor", { body: { action: "set_pin", user_id: id, pin } });
     if (error || data?.error) throw new Error(data?.error || error.message);
   }, "ตั้ง PIN แล้ว").then(viewMe));
 }
